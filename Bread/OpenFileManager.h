@@ -1,15 +1,15 @@
 #pragma once
 
-#include "FileState.h"
-
 #include <filesystem>
 #include <string>
 #include <vector>
 #include <memory>
 
+struct JsonFile;
+
 struct OpenJsonFile {
 	std::string filename;
-	std::shared_ptr<const JsonNode> root;
+	std::shared_ptr<const JsonFile> file;
 };
 
 struct OpenFileManager

@@ -3,7 +3,13 @@
 
 OpenFileManager gOpenFileManager;
 
-void OpenFileManager::OpenFile(const std::filesystem::path &path)
+void OpenFileManager::OpenFile(const std::filesystem::path& path)
 {
-
+	if (auto loadedFile = FileLoader::Load(path))
+	{
+		OpenJsonFile openFile = { .filename = path.filename().string(),
+			.file{loadedFile}
+		};
+		m_OpenFiles.push_back(std::move(openFile));
+	}
 }

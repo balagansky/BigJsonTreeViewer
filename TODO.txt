@@ -1,0 +1,10 @@
+* Optimize file reading
+ + parse while reading! (bottleneck will be the slower of the two)
+ + memory mapped IO ?
+ + overlapped IO?
+* Replace rapidjson with simdjson (4x faster?) - might not be the bottleneck though
+
+Feature Wishlist:
+* Memory limit settings - dedupe strings to try to keep under limit
+ + Use trie with efficient allocator for optimal memory usage
+ + simple map might be good enough

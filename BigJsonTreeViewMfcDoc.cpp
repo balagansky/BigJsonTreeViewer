@@ -38,8 +38,6 @@ CBigJsonTreeViewMfcDoc::~CBigJsonTreeViewMfcDoc()
 {
 }
 
-#include "Butter/Log.h"
-
 BOOL CBigJsonTreeViewMfcDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
@@ -52,9 +50,11 @@ BOOL CBigJsonTreeViewMfcDoc::OnNewDocument()
 }
 
 
+#include "Bread/OpenFileManager.h"
+
 BOOL CBigJsonTreeViewMfcDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	Log::Info(std::string() + "Opened " + lpszPathName);
+	gOpenFileManager.OpenFile(lpszPathName);
 
 	return TRUE;
 }

@@ -45,7 +45,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -53,7 +53,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -95,7 +95,7 @@
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
@@ -169,6 +169,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -190,7 +194,7 @@
     <ClInclude Include="BigJsonTreeViewMfc.h" />
     <ClInclude Include="BigJsonTreeViewMfcDoc.h" />
     <ClInclude Include="BigJsonTreeViewMfcView.h" />
-    <ClInclude Include="Bread\FileLoader.h" />
+    <ClInclude Include="Bread\FileLoading.h" />
     <ClInclude Include="Bread\FileState.h" />
     <ClInclude Include="Bread\OpenFileManager.h" />
     <ClInclude Include="Butter\Log.h" />
@@ -213,6 +217,7 @@
     <ClCompile Include="BigJsonTreeViewMfcDoc.cpp" />
     <ClCompile Include="BigJsonTreeViewMfcView.cpp" />
     <ClCompile Include="Bread\FileLoader.cpp" />
+    <ClCompile Include="Bread\FileLoading.cpp" />
     <ClCompile Include="Bread\FileState.cpp" />
     <ClCompile Include="Bread\OpenFileManager.cpp" />
     <ClCompile Include="Butter\Log.cpp" />
@@ -270,6 +275,7 @@
     <Image Include="res\userimages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".editorconfig" />
     <None Include="res\BigJsonTreeViewMfc.rc2" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

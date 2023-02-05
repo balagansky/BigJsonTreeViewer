@@ -62,7 +62,7 @@
     <ClInclude Include="ViewTree.h">
       <Filter>MFC Source</Filter>
     </ClInclude>
-    <ClInclude Include="Bread\FileLoader.h">
+    <ClInclude Include="Bread\FileLoading.h">
       <Filter>Bread</Filter>
     </ClInclude>
     <ClInclude Include="Bread\FileState.h">
@@ -129,6 +129,9 @@
     </ClCompile>
     <ClCompile Include="Butter\LoggerImpl.cpp">
       <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\FileLoading.cpp">
+      <Filter>Bread</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -238,5 +241,6 @@
     <None Include="res\BigJsonTreeViewMfc.rc2">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include=".editorconfig" />
   </ItemGroup>
 </Project>

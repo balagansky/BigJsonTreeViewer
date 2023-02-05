@@ -1,10 +1,23 @@
 #pragma once
 
 #include <filesystem>
+#include <memory>
 
-struct JsonNode;
+struct JsonFile;
 
-namespace FileLoader
+class FileLoader
 {
-	const JsonNode* Load(const std::filesystem::path &path);
-}
+public:
+	static std::shared_ptr<const JsonFile> Load(const std::filesystem::path& path) {
+		return FileLoader(path).Load();
+	}
+
+private:
+	FileLoader(const std::filesystem::path& path) : m_Path(path) {}
+
+	std::shared_ptr<const JsonFile> Load();
+
+private:
+	// input
+	const std::filesystem::path& m_Path;
+};
