@@ -77,6 +77,9 @@
     <ClInclude Include="Butter\LoggerImpl.h">
       <Filter>Butter</Filter>
     </ClInclude>
+    <ClInclude Include="Bread\Timer.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigJsonTreeViewMfc.cpp">

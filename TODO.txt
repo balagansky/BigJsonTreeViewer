@@ -3,6 +3,7 @@
  + memory mapped IO ?
  + overlapped IO?
 * Replace rapidjson with simdjson (4x faster?) - might not be the bottleneck though
+* clean up PCH, windows includes
 
 Feature Wishlist:
 * Memory limit settings - dedupe strings to try to keep under limit

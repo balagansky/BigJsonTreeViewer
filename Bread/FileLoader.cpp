@@ -1,6 +1,7 @@
 #include "FileLoader.h"
 #include "Butter/Log.h"
 #include "FileState.h"
+#include "Timer.h"
 
 // windows defined
 #undef min
@@ -12,10 +13,10 @@
 #include <rapidjson/error/en.h>
 #include <rapidjson/reader.h>
 #include <rapidjson/istreamwrapper.h>
+#include <rapidjson/document.h>
 
 #include <fstream>
 #include <format>
-#include <chrono>
 
 class SaxHandler : public rapidjson::BaseReaderHandler < rapidjson::UTF8<>, SaxHandler >
 {
@@ -82,56 +83,80 @@ private:
 	JsonNode* m_Node;
 };
 
-struct Timer {
-	Timer() {
-		m_Start = std::chrono::high_resolution_clock::now();
-	}
+std::vector<char> ReadFileIntoBuffer(const std::filesystem::path &path) {
+    std::vector<char> buffer;
 
-	double Ms(bool reset = true)
-	{
-		auto now = std::chrono::high_resolution_clock::now();
-		double ms = std::chrono::duration<double>(
-			std::chrono::high_resolution_clock::now() - m_Start).count() * 1000;
-		if (reset)
-			m_Start = now;
-		return ms;
-	}
+    HANDLE hFile = CreateFile(path.string().c_str(), GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    if (hFile == INVALID_HANDLE_VALUE) {
+        // handle error
+        return buffer;
+    }
 
-	decltype(std::chrono::high_resolution_clock::now()) m_Start;
-};
+    DWORD dwFileSize = GetFileSize(hFile, NULL);
+    buffer.resize(dwFileSize+1);
+	buffer.back() = 0;
 
+    DWORD dwBytesRead;
+    if (!ReadFile(hFile, buffer.data(), dwFileSize, &dwBytesRead, NULL)) {
+        // handle error
+        buffer.clear();
+    }
+
+    CloseHandle(hFile);
+    return buffer;
+}
 
 std::shared_ptr<const JsonFile> FileLoader::Load()
 {
-	std::ifstream fileStream(m_Path);
-	if (!fileStream.is_open() || !fileStream.good())
-		return Log::Error(std::string() + "Failed to open " + m_Path.string().c_str());
-
 	Log::Info(std::string() + "Loading " + m_Path.string().c_str());
-
-	std::stringstream buffer;
-	buffer << fileStream.rdbuf();
-	std::string fileStr = buffer.str();
-
-	auto startTime = std::chrono::high_resolution_clock::now();
-
-	auto parsedFile = std::make_shared<JsonFile>();
 
 	Timer timer;
 
-	//rapidjson::IStreamWrapper saxStream(fileStream);
-	rapidjson::InsituStringStream saxStream(const_cast<char*>(fileStr.c_str()));
-	SaxHandler saxHandler(*parsedFile);
-	rapidjson::Reader saxReader;
-	rapidjson::ParseResult result = saxReader.Parse
-		<rapidjson::kParseNumbersAsStringsFlag | rapidjson::kParseInsituFlag>(
-		saxStream, saxHandler);
+	std::vector<char> buffer = ReadFileIntoBuffer(m_Path);
+
+	if (buffer.empty())
+		return Log::Error(std::string() + "Failed to open " + m_Path.string().c_str());
+
+	Log::Info(std::format("Loaded in {:.2f}ms", timer.Ms()));
+
+	auto parsedFile = std::make_shared<JsonFile>();
+
+	rapidjson::ParseResult result;
+
+	if (true)
+	{
+		// insitu dom
+		rapidjson::Document doc;
+		result = doc.Parse<rapidjson::kParseNumbersAsStringsFlag | rapidjson::kParseInsituFlag>(const_cast<char*>(
+			buffer.data()));
+	}
+	else if (true)
+	{
+		//rapidjson::IStreamWrapper saxStream(fileStream);
+		rapidjson::InsituStringStream saxStream(const_cast<char*>(buffer.data()));
+		SaxHandler saxHandler(*parsedFile);
+		rapidjson::Reader saxReader;
+		result = saxReader.Parse
+			<rapidjson::kParseNumbersAsStringsFlag | rapidjson::kParseInsituFlag>(
+			saxStream, saxHandler);
+	}
+	else
+	{
+		// insitu stream
+		//rapidjson::IStreamWrapper saxStream(fileStream);
+		rapidjson::InsituStringStream saxStream(const_cast<char*>(buffer.data()));
+		SaxHandler saxHandler(*parsedFile);
+		rapidjson::Reader saxReader;
+		result = saxReader.Parse
+			<rapidjson::kParseNumbersAsStringsFlag | rapidjson::kParseInsituFlag>(
+			saxStream, saxHandler);
+	}
 
 	if (!result)
 		return Log::Error(std::format("Parse failure at {}: {}", result.Offset(),
 			GetParseError_En(result.Code())));
 
-	Log::Info(std::format("Loaded in {}ms", timer.Ms()));
+	Log::Info(std::format("Parsed in {:.2f}ms", timer.Ms()));
 
 	return parsedFile;
 }

@@ -197,6 +197,7 @@
     <ClInclude Include="Bread\FileLoading.h" />
     <ClInclude Include="Bread\FileState.h" />
     <ClInclude Include="Bread\OpenFileManager.h" />
+    <ClInclude Include="Bread\Timer.h" />
     <ClInclude Include="Butter\Log.h" />
     <ClInclude Include="Butter\LoggerImpl.h" />
     <ClInclude Include="calendarbar.h" />
