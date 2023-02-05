@@ -6,6 +6,8 @@
 #include "Resource.h"
 #include "MainFrm.h"
 
+#include "Butter/LoggerImpl.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -54,6 +56,11 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1;      // fail to create
 	}
 
+	LoggerHooks::gWriteLineFn = [this](const char* msg) {
+		m_wndOutputBuild.AddString(msg);
+		m_wndOutputBuild.SetTopIndex(m_wndOutputBuild.GetCount()-1);
+	};
+
 	UpdateFonts();
 
 	CString strTabName;
@@ -83,7 +90,7 @@ void COutputWnd::OnSize(UINT nType, int cx, int cy)
 	CDockablePane::OnSize(nType, cx, cy);
 
 	// Tab control should cover the whole client area:
-	m_wndTabs.SetWindowPos (nullptr, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndTabs.SetWindowPos(nullptr, -1, -1, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
@@ -93,7 +100,7 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 
 	int cxExtentMax = 0;
 
-	for (int i = 0; i < wndListBox.GetCount(); i ++)
+	for (int i = 0; i < wndListBox.GetCount(); i++)
 	{
 		CString strItem;
 		wndListBox.GetText(i, strItem);

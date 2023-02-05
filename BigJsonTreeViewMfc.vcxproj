@@ -45,7 +45,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -93,6 +93,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,6 +190,11 @@
     <ClInclude Include="BigJsonTreeViewMfc.h" />
     <ClInclude Include="BigJsonTreeViewMfcDoc.h" />
     <ClInclude Include="BigJsonTreeViewMfcView.h" />
+    <ClInclude Include="Bread\FileLoader.h" />
+    <ClInclude Include="Bread\FileState.h" />
+    <ClInclude Include="Bread\OpenFileManager.h" />
+    <ClInclude Include="Butter\Log.h" />
+    <ClInclude Include="Butter\LoggerImpl.h" />
     <ClInclude Include="calendarbar.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="ClassView.h" />
@@ -203,6 +212,11 @@
     <ClCompile Include="BigJsonTreeViewMfc.cpp" />
     <ClCompile Include="BigJsonTreeViewMfcDoc.cpp" />
     <ClCompile Include="BigJsonTreeViewMfcView.cpp" />
+    <ClCompile Include="Bread\FileLoader.cpp" />
+    <ClCompile Include="Bread\FileState.cpp" />
+    <ClCompile Include="Bread\OpenFileManager.cpp" />
+    <ClCompile Include="Butter\Log.cpp" />
+    <ClCompile Include="Butter\LoggerImpl.cpp" />
     <ClCompile Include="calendarbar.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="ClassView.cpp" />

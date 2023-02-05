@@ -1,102 +1,134 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="MFC Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Bread">
+      <UniqueIdentifier>{1d7610d6-98f2-4aac-a923-27a739db88a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Butter">
+      <UniqueIdentifier>{a0b071a2-e113-4e40-b263-9dbb5a59e7d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigJsonTreeViewMfc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainFrm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ChildFrm.h">
-      <Filter>Header Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClInclude>
     <ClInclude Include="BigJsonTreeViewMfcDoc.h">
-      <Filter>Header Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClInclude>
     <ClInclude Include="BigJsonTreeViewMfcView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FileView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ClassView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewTree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OutputWnd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PropertiesWnd.h">
-      <Filter>Header Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClInclude>
     <ClInclude Include="calendarbar.h">
-      <Filter>Header Files</Filter>
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildFrm.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassView.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="FileView.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputWnd.h">
+      <Filter>MFC Source</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
-      <Filter>Header Files</Filter>
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="PropertiesWnd.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewTree.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Bread\FileLoader.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="Bread\FileState.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="Bread\OpenFileManager.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="Butter\Log.h">
+      <Filter>Butter</Filter>
+    </ClInclude>
+    <ClInclude Include="Butter\LoggerImpl.h">
+      <Filter>Butter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigJsonTreeViewMfc.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="ChildFrm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="BigJsonTreeViewMfcDoc.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="BigJsonTreeViewMfcView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="FileView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="ClassView.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="ViewTree.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="OutputWnd.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="PropertiesWnd.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="calendarbar.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>MFC Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\FileLoader.cpp">
+      <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\FileState.cpp">
+      <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\OpenFileManager.cpp">
+      <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\Log.cpp">
+      <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\LoggerImpl.cpp">
+      <Filter>Butter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
