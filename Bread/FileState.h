@@ -6,22 +6,18 @@
 #include <string>
 #include <string_view>
 
-struct JsonNode
+class JsonNode
 {
-	const char* name;
+public:
+	virtual ~JsonNode() = default;
 
-	const char* value;
-	std::vector<const JsonNode*> children;
-	
-	const JsonNode* parent;
 
-	~JsonNode() {
-		for (const JsonNode* child : children) delete child;
-	}
 };
 
 struct JsonFile
 {
-	std::shared_ptr<const JsonNode> root;
-	std::unordered_map<std::string_view, std::string> strings;
+public:
+	virtual ~JsonFile() = default;
+
+	//virtual const JsonNode *GetRoot() const = 0;
 };

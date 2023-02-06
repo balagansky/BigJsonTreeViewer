@@ -2,7 +2,7 @@
 
 #include <filesystem>
 #include <string>
-#include <vector>
+#include <list>
 #include <memory>
 
 struct JsonFile;
@@ -14,9 +14,10 @@ struct OpenJsonFile {
 
 struct OpenFileManager
 {
-	void OpenFile(const std::filesystem::path &path);
+	bool OpenFile(const std::filesystem::path &path);
 
-	std::vector<OpenJsonFile> m_OpenFiles;
+	const OpenJsonFile *m_ActiveFile = nullptr;
+	std::list<OpenJsonFile> m_OpenFiles;
 };
 
 extern OpenFileManager gOpenFileManager;

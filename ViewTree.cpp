@@ -3,6 +3,8 @@
 #include "framework.h"
 #include "ViewTree.h"
 
+#include "Butter/Log.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE
@@ -21,6 +23,7 @@ CViewTree::~CViewTree()
 }
 
 BEGIN_MESSAGE_MAP(CViewTree, CTreeCtrl)
+	ON_NOTIFY_REFLECT(TVN_ITEMEXPANDING, OnItemExpanding)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -40,4 +43,15 @@ BOOL CViewTree::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult)
 	}
 
 	return bRes;
+}
+
+#include "Butter/JsonTreeViewController.h"
+
+afx_msg void CViewTree::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult)
+{
+	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
+
+	gJsonTreeViewController.ExpandItem(pNMTreeView->itemNew.hItem);
+
+	*pResult = FALSE;
 }

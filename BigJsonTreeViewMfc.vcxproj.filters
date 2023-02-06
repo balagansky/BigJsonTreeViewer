@@ -80,6 +80,15 @@
     <ClInclude Include="Bread\Timer.h">
       <Filter>Bread</Filter>
     </ClInclude>
+    <ClInclude Include="Bread\RapidJsonDomFileState.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="Butter\JsonTreeViewController.h">
+      <Filter>Butter</Filter>
+    </ClInclude>
+    <ClInclude Include="Butter\JsonTreeViewControllerImpl.h">
+      <Filter>Butter</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigJsonTreeViewMfc.cpp">
@@ -135,6 +144,15 @@
     </ClCompile>
     <ClCompile Include="Bread\FileLoading.cpp">
       <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\RapidJsonDomFileState.cpp">
+      <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\JsonTreeViewController.cpp">
+      <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\JsonTreeViewControllerImpl.cpp">
+      <Filter>Butter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

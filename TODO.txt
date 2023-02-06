@@ -1,9 +1,12 @@
+* Fix json parsing bug - not terminating numbers
 * Optimize file reading
  + parse while reading! (bottleneck will be the slower of the two)
  + memory mapped IO ?
  + overlapped IO?
 * Replace rapidjson with simdjson (4x faster?) - might not be the bottleneck though
-* clean up PCH, windows includes
+* clean up PCH, windows includes (search for #undef)
+* handle bad buffer alloc(s)
+* async updates
 
 Feature Wishlist:
 * Memory limit settings - dedupe strings to try to keep under limit

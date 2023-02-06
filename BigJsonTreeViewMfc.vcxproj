@@ -91,7 +91,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -167,7 +167,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
@@ -197,7 +197,10 @@
     <ClInclude Include="Bread\FileLoading.h" />
     <ClInclude Include="Bread\FileState.h" />
     <ClInclude Include="Bread\OpenFileManager.h" />
+    <ClInclude Include="Bread\RapidJsonDomFileState.h" />
     <ClInclude Include="Bread\Timer.h" />
+    <ClInclude Include="Butter\JsonTreeViewController.h" />
+    <ClInclude Include="Butter\JsonTreeViewControllerImpl.h" />
     <ClInclude Include="Butter\Log.h" />
     <ClInclude Include="Butter\LoggerImpl.h" />
     <ClInclude Include="calendarbar.h" />
@@ -221,6 +224,9 @@
     <ClCompile Include="Bread\FileLoading.cpp" />
     <ClCompile Include="Bread\FileState.cpp" />
     <ClCompile Include="Bread\OpenFileManager.cpp" />
+    <ClCompile Include="Bread\RapidJsonDomFileState.cpp" />
+    <ClCompile Include="Butter\JsonTreeViewController.cpp" />
+    <ClCompile Include="Butter\JsonTreeViewControllerImpl.cpp" />
     <ClCompile Include="Butter\Log.cpp" />
     <ClCompile Include="Butter\LoggerImpl.cpp" />
     <ClCompile Include="calendarbar.cpp" />

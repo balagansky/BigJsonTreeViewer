@@ -6,6 +6,8 @@
 #include "Resource.h"
 #include "BigJsonTreeViewMfc.h"
 
+#include "Butter/JsonTreeViewController.h"
+
 #ifdef _DEBUG
 #undef THIS_FILE
 static char THIS_FILE[]=__FILE__;
@@ -79,6 +81,8 @@ int CFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Fill in some static tree view data (dummy code, nothing magic here)
 	FillFileView();
 	AdjustLayout();
+
+	gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
 
 	return 0;
 }

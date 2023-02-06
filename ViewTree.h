@@ -19,5 +19,7 @@ public:
 	virtual ~CViewTree();
 
 protected:
+	afx_msg void OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult);
+
 	DECLARE_MESSAGE_MAP()
 };

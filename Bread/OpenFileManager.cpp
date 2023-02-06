@@ -3,7 +3,7 @@
 
 OpenFileManager gOpenFileManager;
 
-void OpenFileManager::OpenFile(const std::filesystem::path& path)
+bool OpenFileManager::OpenFile(const std::filesystem::path& path)
 {
 	if (auto loadedFile = FileLoader::Load(path))
 	{
@@ -11,5 +11,10 @@ void OpenFileManager::OpenFile(const std::filesystem::path& path)
 			.file{loadedFile}
 		};
 		m_OpenFiles.push_back(std::move(openFile));
+		m_ActiveFile = &m_OpenFiles.back();
+
+		return true;
 	}
+
+	return false;
 }
