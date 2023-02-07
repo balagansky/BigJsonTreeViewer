@@ -51,7 +51,7 @@ afx_msg void CViewTree::OnItemExpanding(NMHDR* pNMHDR, LRESULT* pResult)
 {
 	NM_TREEVIEW* pNMTreeView = (NM_TREEVIEW*)pNMHDR;
 
-	gJsonTreeViewController.ExpandItem(pNMTreeView->itemNew.hItem);
+	gJsonTreeViewController.ExpandItem(*this, pNMTreeView->itemNew.hItem);
 
 	*pResult = FALSE;
 }

@@ -8,22 +8,28 @@ JsonTreeViewController::JsonTreeViewController()
 	m_Impl = std::make_shared<JsonTreeViewControllerImpl>();
 }
 
-void JsonTreeViewController::SetTreeCtrl(CViewTree &treeCtrl)
+void JsonTreeViewController::SetTreeCtrlForFile(
+	const std::filesystem::path &path, CViewTree &treeCtrl)
 {
-	m_Impl->m_TreeCtrl = &treeCtrl;
+	m_Impl->SetTreeCtrlForFile(path, treeCtrl);
 }
 
-void JsonTreeViewController::Update(const OpenJsonFile &file)
+void JsonTreeViewController::SetFile(const OpenJsonFile &file)
 {
-	m_Impl->Update(file);
+	m_Impl->SetFile(file);
 }
 
-void JsonTreeViewController::Clear()
+void JsonTreeViewController::RemoveFile(const OpenJsonFile &file)
 {
-	m_Impl->Clear();
+	m_Impl->RemoveFile(file);
 }
 
-void JsonTreeViewController::ExpandItem(HTREEITEM item)
+void JsonTreeViewController::RemoveTreeCtrl(CViewTree &treeCtrl)
 {
-	m_Impl->ExpandItem(item);
+	m_Impl->RemoveTreeCtrl(treeCtrl);
+}
+
+void JsonTreeViewController::ExpandItem(CViewTree &treeCtrl, HTREEITEM item)
+{
+	m_Impl->ExpandItem(treeCtrl, item);
 }

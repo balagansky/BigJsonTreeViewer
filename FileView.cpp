@@ -23,7 +23,7 @@ CFileView::CFileView() noexcept
 
 CFileView::~CFileView()
 {
-	gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
+	//gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
 }
 
 BEGIN_MESSAGE_MAP(CFileView, CDockablePane)
@@ -83,7 +83,7 @@ int CFileView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	FillFileView();
 	AdjustLayout();
 
-	gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
+	//gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
 
 	return 0;
 }

@@ -9,6 +9,7 @@
 #include "Bread/RapidJsonDomFileState.h"
 
 #include <format>
+#include <ranges>
 
 struct TreeLock
 {
@@ -25,39 +26,71 @@ struct TreeLock
 	CViewTree& m_Tree;
 };
 
-void JsonTreeViewControllerImpl::Update(const OpenJsonFile& file)
+void JsonTreeViewControllerImpl::SetTreeCtrlForFile(
+	const std::filesystem::path& path, CViewTree& treeCtrl)
 {
+	File& treeFile = m_Files[path];
+	treeFile.m_TreeCtrl = &treeCtrl;
+	InitTree(treeFile);
+}
+
+void JsonTreeViewControllerImpl::SetFile(const OpenJsonFile& file)
+{
+	File& treeFile = m_Files[file.path];
+	treeFile.m_File = &file;
+	InitTree(treeFile);
+}
+
+void JsonTreeViewControllerImpl::InitTree(File& file)
+{
+	if (file.m_Initialized || !file.m_TreeCtrl || !file.m_File)
+		return;
+
+	file.m_Initialized = true;
+
 	Log::Info("Updating tree view to new file..");
 
 	Timer timer;
 
-	if (!m_TreeCtrl)
-		return (void)Log::Error("Oops! Don't have the tree control!");
-
 	{
-		TreeLock treeLock(*m_TreeCtrl);
+		TreeLock treeLock(*file.m_TreeCtrl);
 
-		m_TreeCtrl->DeleteAllItems();
+		file.m_TreeCtrl->DeleteAllItems();
 
-		const RapidJsonDomFile& domFile = static_cast<const RapidJsonDomFile&>(*file.file);
+		const RapidJsonDomFile& domFile = static_cast<const RapidJsonDomFile&>(*file.m_File->file);
 
-		AddValue(domFile.m_Doc, 0);
+		file.AddValue(domFile.m_Doc, 0);
 	}
 
 	Log::Info(std::format("Updated tree view in {:.2f}ms", timer.Ms()));
 }
 
-void JsonTreeViewControllerImpl::Clear()
+void JsonTreeViewControllerImpl::RemoveFile(const OpenJsonFile& file)
 {
-	m_TreeCtrl->DeleteAllItems();
+	m_Files.erase(file.path);
 }
 
-void JsonTreeViewControllerImpl::ExpandItem(HTREEITEM item)
+void JsonTreeViewControllerImpl::RemoveTreeCtrl(CViewTree& treeCtrl)
 {
-	if (m_ItemMap.empty())
+	std::erase_if(m_Files,
+		[&](const auto& fileEntry) { return fileEntry.second.m_TreeCtrl == &treeCtrl; });
+}
+
+void JsonTreeViewControllerImpl::ExpandItem(CViewTree& treeCtrl, HTREEITEM item)
+{
+	auto files = m_Files | std::views::values;
+	auto foundFile = std::ranges::find_if(files,
+		[&](const File& file) { return file.m_TreeCtrl == &treeCtrl; });
+
+	if (foundFile == files.end())
+		return (void)Log::Error("Can't find tree whose item is being expanded!");
+
+	File& file = *foundFile;
+
+	if (file.m_ItemMap.empty())
 		return; // not initialized yet
 
-	ExpandableItem &expandableItem = m_ItemMap.at(item);
+	ExpandableItem& expandableItem = file.m_ItemMap.at(item);
 	if (!expandableItem.placeholder)
 		return; // we already filled this previously
 
@@ -65,22 +98,20 @@ void JsonTreeViewControllerImpl::ExpandItem(HTREEITEM item)
 
 	Timer timer;
 
-	if (!m_TreeCtrl)
-		return (void)Log::Error("Oops! Don't have the tree control!");
-
 	{
-		TreeLock treeLock(*m_TreeCtrl);
+		TreeLock treeLock(treeCtrl);
 
-		m_TreeCtrl->DeleteItem(expandableItem.placeholder);
+		treeCtrl.DeleteItem(expandableItem.placeholder);
 		expandableItem.placeholder = 0;
 
-		AddValue(*expandableItem.value, item);
+		file.AddValue(*expandableItem.value, item);
 	}
 
 	Log::Info(std::format("Updated tree view in {:.2f}ms", timer.Ms()));
 }
 
-void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEITEM where)
+void JsonTreeViewControllerImpl::File::AddValue(
+	const rapidjson::Value& value, HTREEITEM where)
 {
 	auto fValueStr = [](const rapidjson::Value& value) {
 		switch (value.GetType())
@@ -95,7 +126,7 @@ void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEIT
 			// HACK: when we use insitu + parseNumbersAsStrings, rapidjson does not
 			//	add a null terminator after number strings because this will break its
 			//	parsing. But we can do so safely here since we know the length.
-			*const_cast<char*>(value.GetString()+value.GetStringLength()) = 0;
+			*const_cast<char*>(value.GetString() + value.GetStringLength()) = 0;
 			return value.GetString();
 		case rapidjson::kNumberType:
 			return "unexpected number";
@@ -113,7 +144,7 @@ void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEIT
 	case rapidjson::kObjectType:
 	{
 		size_t i = 0;
-		#undef GetObject
+#undef GetObject
 		for (const auto& member : value.GetObject())
 		{
 			HTREEITEM memberItem = m_TreeCtrl->InsertItem(
@@ -122,7 +153,7 @@ void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEIT
 			if (member.value.IsObject() || member.value.IsArray())
 			{
 				HTREEITEM placeholder = m_TreeCtrl->InsertItem("", 0, 0, memberItem);
-				m_ItemMap.emplace(memberItem, ExpandableItem{&member.value, placeholder});
+				m_ItemMap.emplace(memberItem, ExpandableItem{ &member.value, placeholder });
 			}
 			if (++i > 1000)
 			{
@@ -145,7 +176,7 @@ void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEIT
 			if (arrValue.IsObject() || arrValue.IsArray())
 			{
 				HTREEITEM placeholder = m_TreeCtrl->InsertItem("", 0, 0, memberItem);
-				m_ItemMap.emplace(memberItem, ExpandableItem{&arrValue, placeholder});
+				m_ItemMap.emplace(memberItem, ExpandableItem{ &arrValue, placeholder });
 			}
 
 			if (i > 1000)

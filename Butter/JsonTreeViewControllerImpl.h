@@ -2,6 +2,7 @@
 
 #include "rapidjson/document.h"
 
+#include <filesystem>
 #include <unordered_map>
 
 struct OpenJsonFile;
@@ -11,22 +12,34 @@ class JsonTreeViewControllerImpl
 {
 	friend class JsonTreeViewController;
 
-	void Update(const OpenJsonFile &file);
-	void Clear();
-	void ExpandItem(HTREEITEM item);
+	void SetTreeCtrlForFile(const std::filesystem::path &path, CViewTree &treeCtrl);
+	void SetFile(const OpenJsonFile &file);
+
+	void RemoveFile(const OpenJsonFile &file);
+	void RemoveTreeCtrl(CViewTree &treeCtrl);
+
+	void ExpandItem(CViewTree &treeCtrl, HTREEITEM item);
 
 private:
-	void AddValue(const rapidjson::Value &value, HTREEITEM where);
+	struct File;
+	void InitTree(File &file);
 
 private:
 
 private:
-	CViewTree *m_TreeCtrl = nullptr;
-
 	struct ExpandableItem {
 		const rapidjson::Value* value;
 		HTREEITEM placeholder;
 	};
-	std::unordered_map<HTREEITEM, ExpandableItem> m_ItemMap;
+
+	struct File {
+		void AddValue(const rapidjson::Value &value, HTREEITEM where);
+
+		bool m_Initialized = false;
+		CViewTree* m_TreeCtrl = nullptr;
+		const OpenJsonFile *m_File = nullptr;
+		std::unordered_map<HTREEITEM, ExpandableItem> m_ItemMap;
+	};
+	std::unordered_map<std::filesystem::path, File> m_Files;
 };
 

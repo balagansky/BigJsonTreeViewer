@@ -1,5 +1,6 @@
 #pragma once
 
+#include <filesystem>
 #include <memory>
 #include <string>
 
@@ -12,11 +13,13 @@ class JsonTreeViewController
 public:
 	JsonTreeViewController();
 
-	void SetTreeCtrl(CViewTree &treeCtrl);
+	void SetTreeCtrlForFile(const std::filesystem::path &path, CViewTree &treeCtrl);
+	void SetFile(const OpenJsonFile &file);
 
-	void Update(const OpenJsonFile &file);
-	void Clear();
-	void ExpandItem(HTREEITEM item);
+	void RemoveFile(const OpenJsonFile &file);
+	void RemoveTreeCtrl(CViewTree &treeCtrl);
+
+	void ExpandItem(CViewTree &treeCtrl, HTREEITEM item);
 
 private:
 	std::shared_ptr<JsonTreeViewControllerImpl> m_Impl;

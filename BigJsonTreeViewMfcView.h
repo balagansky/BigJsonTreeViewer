@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "ViewTree.h"
 
 class CBigJsonTreeViewMfcView : public CView
 {
@@ -23,8 +24,13 @@ public:
 	virtual void OnDraw(CDC* pDC);  // overridden to draw this view
 	virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnPaint();
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 	void OnActivateView(BOOL bActivate, CView* pActivateView,
 					CView* pDeactiveView) override;
+
+	void AdjustLayout();
 
 // Implementation
 public:
@@ -35,6 +41,7 @@ public:
 #endif
 
 protected:
+	CViewTree m_wndTreeView;
 
 // Generated message map functions
 protected:

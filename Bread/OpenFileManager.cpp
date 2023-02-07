@@ -3,6 +3,7 @@
 #include "Butter/JsonTreeViewController.h"
 
 #include <algorithm>
+#include <ranges>
 
 OpenFileManager gOpenFileManager;
 
@@ -18,7 +19,7 @@ bool OpenFileManager::OpenFile(const std::filesystem::path& path)
 		m_OpenFiles.push_back(std::move(openFile));
 		m_ActiveFile = &m_OpenFiles.back();
 
-		gJsonTreeViewController.Update(*m_ActiveFile);
+		gJsonTreeViewController.SetFile(*m_ActiveFile);
 
 		return true;
 	}
@@ -28,11 +29,17 @@ bool OpenFileManager::OpenFile(const std::filesystem::path& path)
 
 void OpenFileManager::CloseFile(const std::filesystem::path& path)
 {
-	std::erase_if(m_OpenFiles, [&](const OpenJsonFile &file) { return path == file.path; });
+	auto foundOpenFile = std::ranges::find_if(m_OpenFiles,
+		[&](const OpenJsonFile &file) { return path == file.path; });
+
+	if (foundOpenFile == m_OpenFiles.end())
+		return;
+
+	gJsonTreeViewController.RemoveFile(*foundOpenFile);
+
+	m_OpenFiles.erase(foundOpenFile);
 
 	m_ActiveFile = nullptr;
-
-	gJsonTreeViewController.Clear();
 }
 
 void OpenFileManager::SetActiveFile(const std::filesystem::path& path)
@@ -45,6 +52,7 @@ void OpenFileManager::SetActiveFile(const std::filesystem::path& path)
 			m_ActiveFile = &file;
 	}
 
-	if (m_ActiveFile)
-		gJsonTreeViewController.Update(*m_ActiveFile);
+	// no action for now
+	/*if (m_ActiveFile)
+		gJsonTreeViewController.Update(*m_ActiveFile);*/
 }

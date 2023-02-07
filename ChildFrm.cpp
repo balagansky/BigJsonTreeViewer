@@ -1,6 +1,4 @@
 
-#include "Butter/Log.h"
-
 // ChildFrm.cpp : implementation of the CChildFrame class
 //
 
@@ -25,7 +23,6 @@ END_MESSAGE_MAP()
 
 CChildFrame::CChildFrame() noexcept
 {
-	Log::Info("ChildFrm created");
 	// TODO: add member initialization code here
 }
 
