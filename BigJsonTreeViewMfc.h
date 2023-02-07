@@ -34,6 +34,9 @@ public:
 	virtual void SaveCustomState();
 
 	afx_msg void OnAppAbout();
+
+	void DisableUi(CCmdUI *pCmdUI) { pCmdUI->Enable( FALSE ); }
+
 	DECLARE_MESSAGE_MAP()
 };
 

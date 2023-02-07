@@ -23,10 +23,13 @@
 BEGIN_MESSAGE_MAP(CBigJsonTreeViewMfcApp, CWinAppEx)
 	ON_COMMAND(ID_APP_ABOUT, &CBigJsonTreeViewMfcApp::OnAppAbout)
 	// Standard file based document commands
-	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
+	//ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
+	// disable saving
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, &CBigJsonTreeViewMfcApp::DisableUi)
+	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, &CBigJsonTreeViewMfcApp::DisableUi)
 	// Standard print setup command
-	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
+	//ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinAppEx::OnFilePrintSetup)
 END_MESSAGE_MAP()
 
 
@@ -138,7 +141,8 @@ BOOL CBigJsonTreeViewMfcApp::InitInstance()
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
 
-
+	// don't open new doc on launch
+	cmdInfo.m_nShellCommand = CCommandLineInfo::FileNothing;
 
 	// Dispatch commands specified on the command line.  Will return FALSE if
 	// app was launched with /RegServer, /Register, /Unregserver or /Unregister.

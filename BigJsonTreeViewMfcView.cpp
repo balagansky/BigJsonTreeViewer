@@ -24,9 +24,9 @@ IMPLEMENT_DYNCREATE(CBigJsonTreeViewMfcView, CView)
 
 BEGIN_MESSAGE_MAP(CBigJsonTreeViewMfcView, CView)
 	// Standard printing commands
-	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
-	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CBigJsonTreeViewMfcView::OnFilePrintPreview)
+	//ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
+	//ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
+	//ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CBigJsonTreeViewMfcView::OnFilePrintPreview)
 	ON_WM_CONTEXTMENU()
 	ON_WM_RBUTTONUP()
 END_MESSAGE_MAP()

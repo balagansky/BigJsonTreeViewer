@@ -53,11 +53,11 @@ void CPropertiesWnd::AdjustLayout()
 	CRect rectClient;
 	GetClientRect(rectClient);
 
-	int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
+	//int cyTlb = m_wndToolBar.CalcFixedLayout(FALSE, TRUE).cy;
 
-	m_wndObjectCombo.SetWindowPos(nullptr, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndToolBar.SetWindowPos(nullptr, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
-	m_wndPropList.SetWindowPos(nullptr, rectClient.left, rectClient.top + m_nComboHeight + cyTlb, rectClient.Width(), rectClient.Height() -(m_nComboHeight+cyTlb), SWP_NOACTIVATE | SWP_NOZORDER);
+	//m_wndObjectCombo.SetWindowPos(nullptr, rectClient.left, rectClient.top, rectClient.Width(), m_nComboHeight, SWP_NOACTIVATE | SWP_NOZORDER);
+	//m_wndToolBar.SetWindowPos(nullptr, rectClient.left, rectClient.top + m_nComboHeight, rectClient.Width(), cyTlb, SWP_NOACTIVATE | SWP_NOZORDER);
+	m_wndPropList.SetWindowPos(nullptr, rectClient.left, rectClient.top /*+ m_nComboHeight + cyTlb*/, rectClient.Width(), rectClient.Height() /*-(m_nComboHeight+cyTlb)*/, SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
@@ -69,22 +69,22 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	rectDummy.SetRectEmpty();
 
 	// Create combo:
-	const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
+	//const DWORD dwViewStyle = WS_CHILD | WS_VISIBLE | CBS_DROPDOWNLIST | WS_BORDER | CBS_SORT | WS_CLIPSIBLINGS | WS_CLIPCHILDREN;
 
-	if (!m_wndObjectCombo.Create(dwViewStyle, rectDummy, this, 1))
-	{
-		TRACE0("Failed to create Properties Combo \n");
-		return -1;      // fail to create
-	}
+	//if (!m_wndObjectCombo.Create(dwViewStyle, rectDummy, this, 1))
+	//{
+	//	TRACE0("Failed to create Properties Combo \n");
+	//	return -1;      // fail to create
+	//}
 
-	m_wndObjectCombo.AddString(_T("Application"));
-	m_wndObjectCombo.AddString(_T("Properties Window"));
-	m_wndObjectCombo.SetCurSel(0);
+	//m_wndObjectCombo.AddString(_T("Application"));
+	//m_wndObjectCombo.AddString(_T("Properties Window"));
+	//m_wndObjectCombo.SetCurSel(0);
 
-	CRect rectCombo;
-	m_wndObjectCombo.GetClientRect (&rectCombo);
+	//CRect rectCombo;
+	//m_wndObjectCombo.GetClientRect (&rectCombo);
 
-	m_nComboHeight = rectCombo.Height();
+	//m_nComboHeight = rectCombo.Height();
 
 	if (!m_wndPropList.Create(WS_VISIBLE | WS_CHILD, rectDummy, this, 2))
 	{
@@ -94,17 +94,17 @@ int CPropertiesWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	InitPropList();
 
-	m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_PROPERTIES);
-	m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE /* Is locked */);
-	m_wndToolBar.CleanUpLockedImages();
-	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE /* Locked */);
+	//m_wndToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_PROPERTIES);
+	//m_wndToolBar.LoadToolBar(IDR_PROPERTIES, 0, 0, TRUE /* Is locked */);
+	//m_wndToolBar.CleanUpLockedImages();
+	//m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_PROPERTIES_HC : IDR_PROPERTIES, 0, 0, TRUE /* Locked */);
 
-	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
-	m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
-	m_wndToolBar.SetOwner(this);
+	//m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
+	//m_wndToolBar.SetPaneStyle(m_wndToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
+	//m_wndToolBar.SetOwner(this);
 
-	// All commands will be routed via this control , not via the parent frame:
-	m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
+	//// All commands will be routed via this control , not via the parent frame:
+	//m_wndToolBar.SetRouteCommandsViaFrame(FALSE);
 
 	AdjustLayout();
 	return 0;
@@ -166,9 +166,9 @@ void CPropertiesWnd::InitPropList()
 
 	CMFCPropertyGridProperty* pGroup1 = new CMFCPropertyGridProperty(_T("Appearance"));
 
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("3D Look"), (_variant_t) false, _T("Specifies the window's font will be non-bold and controls will have a 3D border")));
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("These"), (_variant_t) false, _T("Specifies the window's font will be non-bold and controls will have a 3D border")));
 
-	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("Border"), _T("Dialog Frame"), _T("One of: None, Thin, Resizable, or Dialog Frame"));
+	CMFCPropertyGridProperty* pProp = new CMFCPropertyGridProperty(_T("Do"), _T("Dialog Frame"), _T("One of: None, Thin, Resizable, or Dialog Frame"));
 	pProp->AddOption(_T("None"));
 	pProp->AddOption(_T("Thin"));
 	pProp->AddOption(_T("Resizable"));
@@ -176,11 +176,11 @@ void CPropertiesWnd::InitPropList()
 	pProp->AllowEdit(FALSE);
 
 	pGroup1->AddSubItem(pProp);
-	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("Caption"), (_variant_t) _T("About"), _T("Specifies the text that will be displayed in the window's title bar")));
+	pGroup1->AddSubItem(new CMFCPropertyGridProperty(_T("Nothing"), (_variant_t) _T("About"), _T("Specifies the text that will be displayed in the window's title bar")));
 
 	m_wndPropList.AddProperty(pGroup1);
 
-	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("Window Size"), 0, TRUE);
+	CMFCPropertyGridProperty* pSize = new CMFCPropertyGridProperty(_T("Yet..."), 0, TRUE);
 
 	pProp = new CMFCPropertyGridProperty(_T("Height"), (_variant_t) 250l, _T("Specifies the window's height"));
 	pProp->EnableSpinControl(TRUE, 50, 300);
@@ -192,7 +192,7 @@ void CPropertiesWnd::InitPropList()
 
 	m_wndPropList.AddProperty(pSize);
 
-	CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("Font"));
+	/*CMFCPropertyGridProperty* pGroup2 = new CMFCPropertyGridProperty(_T("Font"));
 
 	LOGFONT lf;
 	CFont* font = CFont::FromHandle((HFONT) GetStockObject(DEFAULT_GUI_FONT));
@@ -235,7 +235,7 @@ void CPropertiesWnd::InitPropList()
 	pGroup411->AddSubItem(new CMFCPropertyGridProperty(_T("Item 3"), (_variant_t) _T("Value 3"), _T("This is a description")));
 
 	pGroup4->Expand(FALSE);
-	m_wndPropList.AddProperty(pGroup4);
+	m_wndPropList.AddProperty(pGroup4);*/
 }
 
 void CPropertiesWnd::OnSetFocus(CWnd* pOldWnd)
@@ -269,5 +269,5 @@ void CPropertiesWnd::SetPropListFont()
 	m_fntPropList.CreateFontIndirect(&lf);
 
 	m_wndPropList.SetFont(&m_fntPropList);
-	m_wndObjectCombo.SetFont(&m_fntPropList);
+	//m_wndObjectCombo.SetFont(&m_fntPropList);
 }

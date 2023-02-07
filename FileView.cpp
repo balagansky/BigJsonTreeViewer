@@ -95,7 +95,15 @@ void CFileView::OnSize(UINT nType, int cx, int cy)
 
 void CFileView::FillFileView()
 {
-	HTREEITEM hRoot = m_wndFileView.InsertItem(_T("FakeApp files"), 0, 0);
+	HTREEITEM hRoot = m_wndFileView.InsertItem(_T("Open a JSON file to begin..."), 0, 0);
+	HTREEITEM hChild = m_wndFileView.InsertItem("data will appear", 0, 0, hRoot);
+	m_wndFileView.InsertItem("here", 1, 1, hChild);
+
+	m_wndFileView.Expand(hRoot, TVE_EXPAND);
+	m_wndFileView.Expand(hChild, TVE_EXPAND);
+
+
+	/*HTREEITEM hRoot = m_wndFileView.InsertItem(_T("FakeApp files"), 0, 0);
 	m_wndFileView.SetItemState(hRoot, TVIS_BOLD, TVIS_BOLD);
 
 	HTREEITEM hSrc = m_wndFileView.InsertItem(_T("FakeApp Source Files"), 0, 0, hRoot);
@@ -125,7 +133,7 @@ void CFileView::FillFileView()
 
 	m_wndFileView.Expand(hRoot, TVE_EXPAND);
 	m_wndFileView.Expand(hSrc, TVE_EXPAND);
-	m_wndFileView.Expand(hInc, TVE_EXPAND);
+	m_wndFileView.Expand(hInc, TVE_EXPAND);*/
 }
 
 void CFileView::OnContextMenu(CWnd* pWnd, CPoint point)

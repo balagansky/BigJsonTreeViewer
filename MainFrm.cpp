@@ -27,8 +27,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
-	ON_COMMAND(ID_VIEW_CAPTION_BAR, &CMainFrame::OnViewCaptionBar)
-	ON_UPDATE_COMMAND_UI(ID_VIEW_CAPTION_BAR, &CMainFrame::OnUpdateViewCaptionBar)
+	//ON_COMMAND(ID_VIEW_CAPTION_BAR, &CMainFrame::OnViewCaptionBar)
+	//ON_UPDATE_COMMAND_UI(ID_VIEW_CAPTION_BAR, &CMainFrame::OnUpdateViewCaptionBar)
 	ON_COMMAND(ID_TOOLS_OPTIONS, &CMainFrame::OnOptions)
 	ON_WM_SETTINGCHANGE()
 END_MESSAGE_MAP()
@@ -123,18 +123,18 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_TOP | CBRS_ALIGN_BOTTOM | CBRS_ALIGN_RIGHT);
 
 	// Create and setup "Outlook" navigation bar:
-	if (!CreateOutlookBar(m_wndNavigationBar, ID_VIEW_NAVIGATION, m_wndTree, m_wndCalendar, 250))
-	{
-		TRACE0("Failed to create navigation pane\n");
-		return -1;      // fail to create
-	}
+	//if (!CreateOutlookBar(m_wndNavigationBar, ID_VIEW_NAVIGATION, m_wndTree, m_wndCalendar, 250))
+	//{
+	//	TRACE0("Failed to create navigation pane\n");
+	//	return -1;      // fail to create
+	//}
 
 	// Create a caption bar:
-	if (!CreateCaptionBar())
-	{
-		TRACE0("Failed to create caption bar\n");
-		return -1;      // fail to create
-	}
+	//if (!CreateCaptionBar())
+	//{
+	//	TRACE0("Failed to create caption bar\n");
+	//	return -1;      // fail to create
+	//}
 
 	// Outlook bar is created and docking on the left side should be allowed.
 	EnableDocking(CBRS_ALIGN_LEFT);
@@ -151,10 +151,10 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	m_wndFileView.EnableDocking(CBRS_ALIGN_ANY);
-	m_wndClassView.EnableDocking(CBRS_ALIGN_ANY);
+	//m_wndClassView.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndFileView);
 	CDockablePane* pTabbedBar = nullptr;
-	m_wndClassView.AttachToTabWnd(&m_wndFileView, DM_SHOW, TRUE, &pTabbedBar);
+	//m_wndClassView.AttachToTabWnd(&m_wndFileView, DM_SHOW, TRUE, &pTabbedBar);
 	m_wndOutput.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndOutput);
 	m_wndProperties.EnableDocking(CBRS_ALIGN_ANY);
@@ -208,7 +208,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	lstBasicCommands.AddTail(ID_SORTING_SORTBYACCESS);
 	lstBasicCommands.AddTail(ID_SORTING_GROUPBYTYPE);
 
-	CMFCToolBar::SetBasicCommands(lstBasicCommands);
+	//CMFCToolBar::SetBasicCommands(lstBasicCommands);
 
 	// Switch the order of document name and application name on the window title bar. This
 	// improves the usability of the taskbar because the document name is visible with the thumbnail.
@@ -219,6 +219,9 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
+	cs.cx = 1200;
+	cs.cy = 600;
+
 	if( !CMDIFrameWndEx::PreCreateWindow(cs) )
 		return FALSE;
 	// TODO: Modify the Window class or styles here by modifying
@@ -232,20 +235,20 @@ BOOL CMainFrame::CreateDockingWindows()
 	BOOL bNameValid;
 
 	// Create class view
-	CString strClassView;
-	bNameValid = strClassView.LoadString(IDS_CLASS_VIEW);
-	ASSERT(bNameValid);
-	if (!m_wndClassView.Create(strClassView, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_CLASSVIEW, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
-	{
-		TRACE0("Failed to create Class View window\n");
-		return FALSE; // failed to create
-	}
+	//CString strClassView;
+	//bNameValid = strClassView.LoadString(IDS_CLASS_VIEW);
+	//ASSERT(bNameValid);
+	//if (!m_wndClassView.Create(strClassView, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_CLASSVIEW, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI))
+	//{
+	//	TRACE0("Failed to create Class View window\n");
+	//	return FALSE; // failed to create
+	//}
 
 	// Create file view
 	CString strFileView;
 	bNameValid = strFileView.LoadString(IDS_FILE_VIEW);
 	ASSERT(bNameValid);
-	if (!m_wndFileView.Create(strFileView, this, CRect(0, 0, 200, 200), TRUE, ID_VIEW_FILEVIEW, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT| CBRS_FLOAT_MULTI))
+	if (!m_wndFileView.Create(strFileView, this, CRect(0, 0, 400, 200), TRUE, ID_VIEW_FILEVIEW, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT| CBRS_FLOAT_MULTI))
 	{
 		TRACE0("Failed to create File View window\n");
 		return FALSE; // failed to create
@@ -280,8 +283,8 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	HICON hFileViewIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_FILE_VIEW_HC : IDI_FILE_VIEW), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 	m_wndFileView.SetIcon(hFileViewIcon, FALSE);
 
-	HICON hClassViewIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_CLASS_VIEW_HC : IDI_CLASS_VIEW), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
-	m_wndClassView.SetIcon(hClassViewIcon, FALSE);
+	/*HICON hClassViewIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_CLASS_VIEW_HC : IDI_CLASS_VIEW), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
+	m_wndClassView.SetIcon(hClassViewIcon, FALSE);*/
 
 	HICON hOutputBarIcon = (HICON) ::LoadImage(::AfxGetResourceHandle(), MAKEINTRESOURCE(bHiColorIcons ? IDI_OUTPUT_WND_HC : IDI_OUTPUT_WND), IMAGE_ICON, ::GetSystemMetrics(SM_CXSMICON), ::GetSystemMetrics(SM_CYSMICON), 0);
 	m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
@@ -358,12 +361,12 @@ BOOL CMainFrame::CreateCaptionBar()
 	BOOL bNameValid;
 
 	CString strTemp, strTemp2;
-	bNameValid = strTemp.LoadString(IDS_CAPTION_BUTTON);
-	ASSERT(bNameValid);
-	m_wndCaptionBar.SetButton(strTemp, ID_TOOLS_OPTIONS, CMFCCaptionBar::ALIGN_LEFT, FALSE);
-	bNameValid = strTemp.LoadString(IDS_CAPTION_BUTTON_TIP);
-	ASSERT(bNameValid);
-	m_wndCaptionBar.SetButtonToolTip(strTemp);
+	//bNameValid = strTemp.LoadString(IDS_CAPTION_BUTTON);
+	//ASSERT(bNameValid);
+	//m_wndCaptionBar.SetButton(strTemp, ID_TOOLS_OPTIONS, CMFCCaptionBar::ALIGN_LEFT, FALSE);
+	//bNameValid = strTemp.LoadString(IDS_CAPTION_BUTTON_TIP);
+	//ASSERT(bNameValid);
+	//m_wndCaptionBar.SetButtonToolTip(strTemp);
 
 	bNameValid = strTemp.LoadString(IDS_CAPTION_TEXT);
 	ASSERT(bNameValid);
