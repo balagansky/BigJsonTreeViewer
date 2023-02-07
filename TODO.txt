@@ -12,7 +12,11 @@ Code Cleanup:
 * clean up PCH, windows includes (search for #undef)
 
 UX:
-* Invert doc dispay - each doc tab should be a tree and a static panel should display json text
+* Enable copying values from tree views
+ + context menu choices for key and/or value
+ + copy entire object/array to clipboard? (any limit?)
+* Reload from disk
+ + auto-prompt
 
 Feature Wishlist:
 * Show pretty printed content of selected json values in doc panel (with syntax highlighting)
