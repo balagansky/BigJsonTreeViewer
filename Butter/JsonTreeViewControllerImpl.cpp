@@ -87,7 +87,10 @@ void JsonTreeViewControllerImpl::AddValue(const rapidjson::Value& value, HTREEIT
 		case rapidjson::kTrueType:
 			return "true";
 		case rapidjson::kStringType:
-			// TODO: quotes
+			// HACK: when we use insitu + parseNumbersAsStrings, rapidjson does not
+			//	add a null terminator after number strings because this will break its
+			//	parsing. But we can do so safely here since we know the length.
+			*const_cast<char*>(value.GetString()+value.GetStringLength()) = 0;
 			return value.GetString();
 		case rapidjson::kNumberType:
 			return "unexpected number";
