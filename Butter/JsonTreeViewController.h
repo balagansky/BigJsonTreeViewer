@@ -15,6 +15,7 @@ public:
 	void SetTreeCtrl(CViewTree &treeCtrl);
 
 	void Update(const OpenJsonFile &file);
+	void Clear();
 	void ExpandItem(HTREEITEM item);
 
 private:

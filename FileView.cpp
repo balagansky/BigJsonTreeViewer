@@ -23,6 +23,7 @@ CFileView::CFileView() noexcept
 
 CFileView::~CFileView()
 {
+	gJsonTreeViewController.SetTreeCtrl(m_wndFileView);
 }
 
 BEGIN_MESSAGE_MAP(CFileView, CDockablePane)

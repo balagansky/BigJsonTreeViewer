@@ -74,20 +74,12 @@ void CBigJsonTreeViewMfcView::OnFilePrintPreview()
 #endif
 }
 
-BOOL CBigJsonTreeViewMfcView::OnPreparePrinting(CPrintInfo* pInfo)
-{
-	// default preparation
-	return DoPreparePrinting(pInfo);
-}
+#include "Bread/OpenFileManager.h"
 
-void CBigJsonTreeViewMfcView::OnBeginPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
+void CBigJsonTreeViewMfcView::OnActivateView(BOOL bActivate, CView* pActivateView,
+	CView* pDeactiveView)
 {
-	// TODO: add extra initialization before printing
-}
-
-void CBigJsonTreeViewMfcView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
-{
-	// TODO: add cleanup after printing
+	gOpenFileManager.SetActiveFile(std::string(GetDocument()->GetPathName()));
 }
 
 void CBigJsonTreeViewMfcView::OnRButtonUp(UINT /* nFlags */, CPoint point)

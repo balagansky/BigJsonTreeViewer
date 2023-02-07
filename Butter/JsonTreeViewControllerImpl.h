@@ -12,6 +12,7 @@ class JsonTreeViewControllerImpl
 	friend class JsonTreeViewController;
 
 	void Update(const OpenJsonFile &file);
+	void Clear();
 	void ExpandItem(HTREEITEM item);
 
 private:

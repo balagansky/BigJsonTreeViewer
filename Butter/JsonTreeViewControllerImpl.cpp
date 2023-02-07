@@ -47,6 +47,11 @@ void JsonTreeViewControllerImpl::Update(const OpenJsonFile& file)
 	Log::Info(std::format("Updated tree view in {:.2f}ms", timer.Ms()));
 }
 
+void JsonTreeViewControllerImpl::Clear()
+{
+	m_TreeCtrl->DeleteAllItems();
+}
+
 void JsonTreeViewControllerImpl::ExpandItem(HTREEITEM item)
 {
 	if (m_ItemMap.empty())

@@ -1,14 +1,23 @@
-* Fix json parsing bug - not terminating numbers
+Performance/Robustness:
 * Optimize file reading
  + parse while reading! (bottleneck will be the slower of the two)
  + memory mapped IO ?
  + overlapped IO?
 * Replace rapidjson with simdjson (4x faster?) - might not be the bottleneck though
-* clean up PCH, windows includes (search for #undef)
 * handle bad buffer alloc(s)
 * async updates
 
+Code Cleanup:
+* clean up MFC code
+* clean up PCH, windows includes (search for #undef)
+
+UX:
+* Invert doc dispay - each doc tab should be a tree and a static panel should display json text
+
 Feature Wishlist:
+* Show pretty printed content of selected json values in doc panel (with syntax highlighting)
+* Seach bar
+* Save as formatted (with settings!)
 * Memory limit settings - dedupe strings to try to keep under limit
  + Use trie with efficient allocator for optimal memory usage
  + simple map might be good enough

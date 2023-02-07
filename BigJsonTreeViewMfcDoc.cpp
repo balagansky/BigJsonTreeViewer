@@ -51,14 +51,17 @@ BOOL CBigJsonTreeViewMfcDoc::OnNewDocument()
 
 
 #include "Bread/OpenFileManager.h"
-#include "Butter/JsonTreeViewController.h"
 
 BOOL CBigJsonTreeViewMfcDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (gOpenFileManager.OpenFile(lpszPathName))
-		gJsonTreeViewController.Update(*gOpenFileManager.m_ActiveFile);
+	return gOpenFileManager.OpenFile(lpszPathName);
+}
 
-	return TRUE;
+void CBigJsonTreeViewMfcDoc::OnCloseDocument()
+{
+	gOpenFileManager.CloseFile(std::string(GetPathName()));
+
+	CDocument::OnCloseDocument();
 }
 
 // CBigJsonTreeViewMfcDoc serialization

@@ -18,6 +18,11 @@ void JsonTreeViewController::Update(const OpenJsonFile &file)
 	m_Impl->Update(file);
 }
 
+void JsonTreeViewController::Clear()
+{
+	m_Impl->Clear();
+}
+
 void JsonTreeViewController::ExpandItem(HTREEITEM item)
 {
 	m_Impl->ExpandItem(item);
