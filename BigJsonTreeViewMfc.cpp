@@ -49,7 +49,7 @@ CBigJsonTreeViewMfcApp::CBigJsonTreeViewMfcApp() noexcept
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("BigJsonTreeViewMfc.AppID.NoVersion"));
+	SetAppID(_T("BigJsonTreeViewer.0.1.1"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
@@ -98,7 +98,7 @@ BOOL CBigJsonTreeViewMfcApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
+	SetRegistryKey(_T("BigJsonTreeViewMfc"));
 	LoadStdProfileSettings(4);  // Load standard INI file options (including MRU)
 
 
