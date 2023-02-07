@@ -1,6 +1,5 @@
 #pragma once
 
-#undef max
 #include "rapidjson/document.h"
 
 #include <unordered_map>

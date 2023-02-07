@@ -3,11 +3,6 @@
 #include "RapidJsonDomFileState.h"
 #include "Timer.h"
 
-#undef max
-
-#define RAPIDJSON_SIMD
-#define RAPIDJSON_SSE42
-
 #include <rapidjson/error/en.h>
 #include <rapidjson/document.h>
 

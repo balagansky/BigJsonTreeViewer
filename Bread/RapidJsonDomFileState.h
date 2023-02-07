@@ -8,7 +8,6 @@
 #include <string>
 #include <string_view>
 
-#undef max
 #include <rapidjson/document.h>
 
 struct RapidJsonDomNode
