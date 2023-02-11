@@ -1,4 +1,9 @@
+Now:
+* fix new window views into same file (handle vector of tree ctrls)
+* README/CONTRIBUTING
+
 Performance/Robustness:
+* Handle objects with huge property list same way as arrays (dynamic folding)
 * Optimize file reading
  + parse while reading! (bottleneck will be the slower of the two)
  + memory mapped IO ?
@@ -10,6 +15,7 @@ Performance/Robustness:
 Code Cleanup:
 * clean up MFC code
 * clean up PCH, windows includes (search for #undef)
+* separate MFC code into a separate lib from the implementations (use interfaces for MFC hooks)
 
 UX:
 * Enable copying values from tree views
@@ -17,6 +23,7 @@ UX:
  + copy entire object/array to clipboard? (any limit?)
 * Reload from disk
  + auto-prompt
+* colors + icons in tree view
 
 Feature Wishlist:
 * Show pretty printed content of selected json values in doc panel (with syntax highlighting)
