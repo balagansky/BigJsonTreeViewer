@@ -1,5 +1,6 @@
 Now:
 * fix new window views into same file (handle vector of tree ctrls)
+* reload from disk
 * README/CONTRIBUTING
 
 Performance/Robustness:
@@ -24,6 +25,11 @@ UX:
 * Reload from disk
  + auto-prompt
 * colors + icons in tree view
+* support various ways of opening files:
+ + drag and drop
+ + context menu hook
+ + file association
+* installer
 
 Feature Wishlist:
 * Show pretty printed content of selected json values in doc panel (with syntax highlighting)
