@@ -25,12 +25,17 @@ std::vector<char> ReadFileIntoBuffer(const std::filesystem::path& path)
 	DWORD dwFileSize = GetFileSize(hFile, NULL);
 	std::vector<char> buffer;
 	buffer.resize(dwFileSize + 1);
-	buffer.back() = 0;
 
 	// read file into buffer
 	DWORD dwBytesRead;
 	if (!ReadFile(hFile, buffer.data(), dwFileSize, &dwBytesRead, NULL)) {
 		buffer.clear();
+	}
+	else
+	{
+		if (dwBytesRead != dwFileSize)
+			buffer.resize(dwBytesRead+1);
+		buffer.back() = 0;
 	}
 
 	// close file
