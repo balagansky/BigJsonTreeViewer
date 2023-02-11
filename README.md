@@ -22,7 +22,9 @@ files while providing an intuitive, functional interface.
 
 ## Downloading Releases
 
-TODO
+Simply download the latest release from the [GitHub Releases page](https://github.com/balagansky/BigJsonTreeViewer/releases/).
+
+In order to run the Windows executable, you must have the [VC 2022 Redistributable](https://aka.ms/vs/17/release/vc_redist.x64.exe) installed.
 
 ## Building
 
