@@ -1,5 +1,3 @@
-#pragma optimize("", off)
-
 #include "JsonTreeViewControllerImpl.h"
 #include "Log.h"
 #include "ViewTree.h"
