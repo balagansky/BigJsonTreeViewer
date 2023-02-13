@@ -10,7 +10,14 @@ Log::DefaultAny Log::Info(const std::string& msg)
 
 Log::DefaultAny Log::Error(const std::string& msg)
 {
-	if (LoggerHooks::gWriteLineFn)
-		LoggerHooks::gWriteLineFn((std::string("ERROR: ") + msg).c_str());
-	return {};
+	return Info(std::string("ERROR: ") + msg);
+}
+
+bool Log::Invariant(bool check, const char* msg)
+{
+	if (!check && LoggerHooks::gWriteLineFn)
+		Info((std::string("ASSERTION ERROR: ") + msg
+			+ " This is a bug - please report it (provide a repro if you can)!"));
+
+	return check;
 }

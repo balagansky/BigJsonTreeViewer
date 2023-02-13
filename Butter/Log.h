@@ -12,4 +12,8 @@ namespace Log
 
 	DefaultAny Info(const std::string &msg);
 	DefaultAny Error(const std::string &msg);
+	
+	// asserts check and prints msg followed by direction to report the issue
+	// returns check
+	bool Invariant(bool check, const char *msg);
 }

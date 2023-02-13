@@ -8,6 +8,7 @@
 
 struct OpenJsonFile;
 class CViewTree;
+struct SearchResult;
 
 class JsonTreeViewControllerImpl
 {
@@ -19,7 +20,10 @@ class JsonTreeViewControllerImpl
 	void RemoveFile(const OpenJsonFile& file);
 	void RemoveTreeCtrl(CViewTree& treeCtrl);
 
-	void ExpandItem(CViewTree& treeCtrl, HTREEITEM item);
+	void ExpandItem(CViewTree& treeCtrl, HTREEITEM item,
+		std::optional<rapidjson::SizeType> index = {});
+
+	void SelectSearchResult(const SearchResult& searchResult);
 
 private:
 	struct File;
@@ -45,7 +49,7 @@ private:
 	struct File {
 		void AddValue(const rapidjson::Value& value, HTREEITEM parent);
 		HTREEITEM AddRange(HTREEITEM parent, rapidjson::SizeType start, rapidjson::SizeType end,
-			const rapidjson::Value &value, HTREEITEM where = TVI_LAST);
+			const rapidjson::Value& value, HTREEITEM where = TVI_LAST);
 		void AddArrayValues(rapidjson::Value::ConstArray array, rapidjson::SizeType start,
 			rapidjson::SizeType end, HTREEITEM parent, HTREEITEM where = TVI_LAST);
 		void MakeExpandable(HTREEITEM item, ExpandableItem::Value expansionValue);
@@ -53,7 +57,9 @@ private:
 		bool m_Initialized = false;
 		CViewTree* m_TreeCtrl = nullptr;
 		const OpenJsonFile* m_File = nullptr;
-		std::unordered_map<HTREEITEM, ExpandableItem> m_ItemMap;
+		std::unordered_map<HTREEITEM, ExpandableItem> m_ExpandableItems;
+		std::unordered_map<HTREEITEM, rapidjson::SizeType> m_ArrayMemberItems;
+		std::unordered_map<const rapidjson::Value*, std::vector<HTREEITEM> > m_JsonValueToTreeItems;
 	};
 	std::unordered_map<std::filesystem::path, File> m_Files;
 };

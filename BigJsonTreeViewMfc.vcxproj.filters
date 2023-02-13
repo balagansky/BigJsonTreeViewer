@@ -89,6 +89,19 @@
     <ClInclude Include="Butter\JsonTreeViewControllerImpl.h">
       <Filter>Butter</Filter>
     </ClInclude>
+    <ClInclude Include="Butter\SearchPrompt.h">
+      <Filter>Butter</Filter>
+    </ClInclude>
+    <ClInclude Include="Butter\SearchResults.h">
+      <Filter>Butter</Filter>
+    </ClInclude>
+    <ClInclude Include="Bread\Search.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="FindDialog.h" />
+    <ClInclude Include="Bread\SearchResult.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BigJsonTreeViewMfc.cpp">
@@ -153,6 +166,18 @@
     </ClCompile>
     <ClCompile Include="Butter\JsonTreeViewControllerImpl.cpp">
       <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\SearchPrompt.cpp">
+      <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Butter\SearchResults.cpp">
+      <Filter>Butter</Filter>
+    </ClCompile>
+    <ClCompile Include="Bread\Search.cpp">
+      <Filter>Bread</Filter>
+    </ClCompile>
+    <ClCompile Include="FindDialog.cpp">
+      <Filter>MFC Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

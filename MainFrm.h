@@ -67,6 +67,7 @@ protected:
 	afx_msg void OnUpdateViewCaptionBar(CCmdUI* pCmdUI);
 	afx_msg void OnOptions();
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+	afx_msg void OnEditFind();
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateDockingWindows();

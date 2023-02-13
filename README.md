@@ -18,6 +18,7 @@ files while providing an intuitive, functional interface.
 * Intuitive tree view 
 * Dynamic folding of large arrays
 * Multiple Document Interface with dockable tree view panels - view multiple files side by side!
+* Basic string search
 * [More to come...](./TODO.txt)
 
 ## Downloading Releases

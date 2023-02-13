@@ -33,3 +33,8 @@ void JsonTreeViewController::ExpandItem(CViewTree &treeCtrl, HTREEITEM item)
 {
 	m_Impl->ExpandItem(treeCtrl, item);
 }
+
+void JsonTreeViewController::SelectSearchResult(const SearchResult &searchResult)
+{
+	m_Impl->SelectSearchResult(searchResult);
+}

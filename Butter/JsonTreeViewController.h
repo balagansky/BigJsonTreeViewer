@@ -7,6 +7,7 @@
 struct OpenJsonFile;
 class CViewTree;
 class JsonTreeViewControllerImpl;
+struct SearchResult;
 
 class JsonTreeViewController
 {
@@ -20,6 +21,8 @@ public:
 	void RemoveTreeCtrl(CViewTree &treeCtrl);
 
 	void ExpandItem(CViewTree &treeCtrl, HTREEITEM item);
+
+	void SelectSearchResult(const SearchResult &searchResult);
 
 private:
 	std::shared_ptr<JsonTreeViewControllerImpl> m_Impl;

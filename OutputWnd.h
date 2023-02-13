@@ -19,8 +19,10 @@ protected:
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditClear();
 	afx_msg void OnViewOutput();
+	afx_msg void OnLbnSelchange();
 
 	DECLARE_MESSAGE_MAP()
+public:
 };
 
 class COutputWnd : public CDockablePane
@@ -40,10 +42,6 @@ protected:
 	COutputList m_wndOutputFind;
 
 protected:
-	void FillInfoWindow();
-	void FillDebugWindow();
-	void FillFindWindow();
-
 	void AdjustHorzScroll(CListBox& wndListBox);
 
 // Implementation

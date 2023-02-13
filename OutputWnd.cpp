@@ -7,6 +7,7 @@
 #include "MainFrm.h"
 
 #include "Butter/LoggerImpl.h"
+#include "Butter/SearchResults.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,9 +49,25 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// Create output panes:
 	const DWORD dwStyle = LBS_NOINTEGRALHEIGHT | WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL;
 
-	if (!m_wndOutputInfo.Create(dwStyle, rectDummy, &m_wndTabs, 2)/* ||
-		!m_wndOutputDebug.Create(dwStyle, rectDummy, &m_wndTabs, 3) ||
-		!m_wndOutputFind.Create(dwStyle, rectDummy, &m_wndTabs, 4)*/)
+	auto fCreateTab = [&](CListBox &listBox, int strId, DWORD extraStyle = 0) {
+		static int tabId = 2;
+		if (!listBox.Create(dwStyle | extraStyle, rectDummy, &m_wndTabs, tabId++))
+			return false;
+		listBox.SetFont(&afxGlobalData.fontRegular);
+
+		CString strTabName;
+		BOOL bNameValid;
+
+		// Attach list windows to tab:
+		bNameValid = strTabName.LoadString(strId);
+		ASSERT(bNameValid);
+		m_wndTabs.AddTab(&listBox, strTabName);
+
+		return true;
+	};
+
+	if (!fCreateTab(m_wndOutputInfo, IDS_BUILD_TAB) ||
+		!fCreateTab(m_wndOutputFind, IDS_FIND_TAB, LBS_NOTIFY))
 	{
 		TRACE0("Failed to create output windows\n");
 		return -1;      // fail to create
@@ -58,27 +75,24 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	LoggerHooks::gWriteLineFn = [this](const char* msg) {
 		m_wndOutputInfo.AddString(msg);
-		m_wndOutputInfo.SetTopIndex(m_wndOutputInfo.GetCount()-1);
+		m_wndOutputInfo.SetTopIndex(m_wndOutputInfo.GetCount() - 1);
+		OutputDebugString(msg);
+		OutputDebugString("\n");
 	};
 
-	UpdateFonts();
+	SearchResults::SetCallbacks({
+		.clear = [&] {m_wndOutputFind.ResetContent();},
+		.focus = [&] {
+			m_wndTabs.SetActiveTab(m_wndTabs.GetTabFromHwnd(m_wndOutputFind));
+		},
+		.addLine = [&](const char* str) {
+			auto index = m_wndOutputFind.AddString(str);
+			m_wndOutputFind.SetTopIndex(m_wndOutputInfo.GetCount() - 1);
+			return index;
+		}
+		});
 
-	CString strTabName;
-	BOOL bNameValid;
-
-	// Attach list windows to tab:
-	bNameValid = strTabName.LoadString(IDS_BUILD_TAB);
-	ASSERT(bNameValid);
-	m_wndTabs.AddTab(&m_wndOutputInfo, strTabName, (UINT)0);
-	//bNameValid = strTabName.LoadString(IDS_DEBUG_TAB);
-	//ASSERT(bNameValid);
-	//m_wndTabs.AddTab(&m_wndOutputDebug, strTabName, (UINT)1);
-	//bNameValid = strTabName.LoadString(IDS_FIND_TAB);
-	//ASSERT(bNameValid);
-	//m_wndTabs.AddTab(&m_wndOutputFind, strTabName, (UINT)2);
-
-	// Fill output tabs with some dummy text (nothing magic here)
-	FillInfoWindow();
+	m_wndOutputInfo.AddString(_T("Welcome to Big JSON Tree Viewer!"));
 
 	return 0;
 }
@@ -110,16 +124,11 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 	dc.SelectObject(pOldFont);
 }
 
-void COutputWnd::FillInfoWindow()
-{
-	m_wndOutputInfo.AddString(_T("Welcome to Big JSON Tree Viewer!"));
-}
-
 void COutputWnd::UpdateFonts()
 {
 	m_wndOutputInfo.SetFont(&afxGlobalData.fontRegular);
-	/*m_wndOutputDebug.SetFont(&afxGlobalData.fontRegular);
-	m_wndOutputFind.SetFont(&afxGlobalData.fontRegular);*/
+	/*m_wndOutputDebug.SetFont(&afxGlobalData.fontRegular);*/
+	m_wndOutputFind.SetFont(&afxGlobalData.fontRegular);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -138,7 +147,9 @@ BEGIN_MESSAGE_MAP(COutputList, CListBox)
 	ON_COMMAND(ID_EDIT_COPY, OnEditCopy)
 	ON_COMMAND(ID_EDIT_CLEAR, OnEditClear)
 	ON_COMMAND(ID_VIEW_OUTPUTWND, OnViewOutput)
+	//ON_COMMAND(LBN_DBLCLK, OnFindResultClick)
 	ON_WM_WINDOWPOSCHANGING()
+	ON_CONTROL_REFLECT(LBN_SELCHANGE, &COutputList::OnLbnSelchange)
 END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // COutputList message handlers
@@ -186,4 +197,10 @@ void COutputList::OnViewOutput()
 		pMainFrame->RecalcLayout();
 
 	}
+}
+
+#include "Butter/Log.h"
+void COutputList::OnLbnSelchange()
+{
+	SearchResults::SelectResultLine(GetCurSel());
 }
