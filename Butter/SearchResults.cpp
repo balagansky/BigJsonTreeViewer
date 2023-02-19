@@ -49,8 +49,8 @@ bool SearchResults::AddResult(const SearchResult& searchResult)
 		if (*frame.Key())
 			str += std::string() + '\"' + frame.Key() + '\"';
 
-		if (frame.index)
-			str += std::format("[{}]", *frame.index);
+		for (auto index : frame.indices)
+			str += std::format("[{}]", index);
 	}
 
 	if (!searchResult.value.empty())

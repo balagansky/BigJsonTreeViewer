@@ -13,7 +13,7 @@ struct SearchResult {
 		void Bake() { keyStr = key; }
 
 		const char* Key() const { return keyStr.empty() ? key : keyStr.c_str(); }
-		std::optional<JsonSize> index;
+		std::vector<JsonSize> indices; // size > 1 in case of nested arrays
 	private:
 		const char* key = "";
 		std::string keyStr;

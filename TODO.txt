@@ -1,7 +1,6 @@
 Now:
 * basic search function
- + deal with registry keys - disable customization?
- + RawNumber??
+ + auto-select first result
 * fix new window views into same file (handle vector of tree ctrls)
 * reload from disk
 

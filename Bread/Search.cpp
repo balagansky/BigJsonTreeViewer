@@ -27,9 +27,10 @@ public:
 		m_Current.path.back().SetKey(key); return CheckMatch({ key, len }, false);
 	}
 	bool StartArray() {
-		InitPath(); m_Current.path.back().index = 0; return true;
+		InitPath(); m_Current.path.back().indices.emplace_back(); return true;
 	}
 	bool EndArray(JsonSize) {
+		m_Current.path.back().indices.pop_back();
 		Increment(); return true;
 	}
 	bool String(const char* str, JsonSize len, bool) {
@@ -55,8 +56,11 @@ private:
 			m_Current.path.emplace_back();
 	}
 	void Increment() {
-		auto& optIndex = m_Current.path.back().index;
-		if (optIndex)++* optIndex;
+		if (m_Current.path.empty())
+			return;
+		auto &indices = m_Current.path.back().indices;
+		if (!indices.empty())
+			++indices.back();
 	}
 	bool CheckMatch(std::string_view fileStr, bool isValue)
 	{

@@ -208,6 +208,7 @@ void JsonTreeViewControllerImpl::SelectSearchResult(const SearchResult& searchRe
 
 	auto& doc = static_cast<const RapidJsonDomFile&>(*file.m_File->file).m_Doc;
 	const rapidjson::Value* curVal = &doc;
+	rapidjson::SizeType currentArrayIndexIndex = 0;
 	for (size_t iFrame = 0; iFrame < searchResult.path.size(); /*incremented at the end*/) {
 		const SearchResult::Frame& frame = searchResult.path[iFrame];
 
@@ -222,12 +223,14 @@ void JsonTreeViewControllerImpl::SelectSearchResult(const SearchResult& searchRe
 			{
 				if (expItem->value.arrayRange)
 				{
+					assert(frame.indices.size() > currentArrayIndexIndex);
 					// this is a placeholder array range.. check if our search result is in it
-					if (Utils::InRange(frame.index, expItem->value.arrayRange->start,
+					if (Utils::InRange(frame.indices[currentArrayIndexIndex],
+						expItem->value.arrayRange->start,
 						expItem->value.arrayRange->end - 1))
 					{
 						// search result is in the placeholder range, so let's expand it
-						ExpandItem(*file.m_TreeCtrl, treeItem, frame.index);
+						ExpandItem(*file.m_TreeCtrl, treeItem, frame.indices[currentArrayIndexIndex]);
 						return true;
 					}
 				}
@@ -251,13 +254,15 @@ void JsonTreeViewControllerImpl::SelectSearchResult(const SearchResult& searchRe
 			return false; // note: bad indentation is due to VS formatting bug
 		};
 
-		const auto& valItems = file.m_JsonValueToTreeItems[curVal];
+		// must make a copy as the we can modify the original while searching
+		auto valItems = file.m_JsonValueToTreeItems[curVal];
 		std::optional<HTREEITEM> foundItem = Utils::FindIf(
 			valItems, fCheckFrameMatchAndExpand);
 
 		// TRICKY: for object member arrays, we need to repeat the search again
 		//	The first time through will have expanded the object member, but not
 		//	the frame's array index.
+		valItems = file.m_JsonValueToTreeItems[curVal];
 		Utils::FindIf(
 			valItems, std::bind(fCheckFrameMatchAndExpand, std::placeholders::_1, true));
 
@@ -278,12 +283,14 @@ void JsonTreeViewControllerImpl::SelectSearchResult(const SearchResult& searchRe
 			}
 			else
 			{
-				assert(frame.index.has_value());
+				currentArrayIndexIndex = 0;
+				assert(frame.indices.size());
 			}
 			break;
 		case rapidjson::kArrayType:
-			curVal = &curVal->GetArray()[*frame.index];
-			++iFrame;
+			curVal = &curVal->GetArray()[frame.indices[currentArrayIndexIndex]];
+			if (++currentArrayIndexIndex >= frame.indices.size())
+				++iFrame;
 			break;
 		default:
 			Log::Invariant(false, "Encountered unexpected value type when displaying search result.");
