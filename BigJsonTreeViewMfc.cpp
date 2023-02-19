@@ -136,7 +136,6 @@ BOOL CBigJsonTreeViewMfcApp::InitInstance()
 	}
 	m_pMainWnd = pMainFrame;
 
-
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfo cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -217,6 +216,15 @@ void CBigJsonTreeViewMfcApp::PreLoadState()
 	bNameValid = strName.LoadString(IDS_EXPLORER);
 	ASSERT(bNameValid);
 	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EXPLORER);
+}
+
+BOOL CBigJsonTreeViewMfcApp::LoadState(LPCTSTR lpszSectionName, CFrameImpl* pFrameImpl)
+{
+	// do nothing while UI is still in flux
+	// TODO: re-enable when UI is more stable
+	//CWinAppEx::LoadState(lpszSectionName, pFrameImpl);
+
+	return TRUE;
 }
 
 void CBigJsonTreeViewMfcApp::LoadCustomState()
