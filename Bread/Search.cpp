@@ -1,4 +1,3 @@
-//#pragma optimize("", off)
 #include "Search.h"
 #include "OpenFileManager.h"
 #include "Butter/Log.h"
