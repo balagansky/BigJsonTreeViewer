@@ -98,8 +98,13 @@
     <ClInclude Include="Bread\Search.h">
       <Filter>Bread</Filter>
     </ClInclude>
-    <ClInclude Include="FindDialog.h" />
     <ClInclude Include="Bread\SearchResult.h">
+      <Filter>Bread</Filter>
+    </ClInclude>
+    <ClInclude Include="FindDialog.h">
+      <Filter>MFC Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Bread\Utils.h">
       <Filter>Bread</Filter>
     </ClInclude>
   </ItemGroup>
