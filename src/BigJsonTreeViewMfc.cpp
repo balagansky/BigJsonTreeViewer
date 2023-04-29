@@ -52,7 +52,7 @@ CBigJsonTreeViewMfcApp::CBigJsonTreeViewMfcApp() noexcept
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("BigJsonTreeViewer.0.2.3"));
+	SetAppID(_T("BigJsonTreeViewer.0.3.1"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
