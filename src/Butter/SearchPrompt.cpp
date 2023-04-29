@@ -13,5 +13,6 @@ void PromptSearch()
 	findDlg.DoModal();
 
 	if (findDlg.m_Confirmed)
-		Search(findDlg.m_SearchString.GetString());
+		Search(findDlg.m_SearchString.GetString(),
+			findDlg.m_Exact == BST_CHECKED);
 }

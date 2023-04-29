@@ -26,6 +26,7 @@ void FindDialog::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Text(pDX, IDC_SEARCH_STRING, m_SearchString);
+	DDX_Check(pDX, IDC_SEARCH_EXACT, m_Exact);
 }
 
 
@@ -48,8 +49,6 @@ BOOL FindDialog::OnInitDialog()
 
 	return FALSE;  // return TRUE unless you set the focus to a control
 }
-
-#include "Butter/Log.h"
 
 void FindDialog::OnEnChangeSearchString()
 {

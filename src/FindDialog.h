@@ -23,6 +23,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CString m_SearchString;
+	int m_Exact = false;
 	bool m_Confirmed = false;
 
 	virtual BOOL OnInitDialog();

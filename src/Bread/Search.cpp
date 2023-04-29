@@ -11,8 +11,9 @@
 class SearchHandler {
 	using JsonSize = rapidjson::SizeType;
 public:
-	SearchHandler(const std::string& searchString, 
-		const std::filesystem::path &filePath) : m_SearchString(searchString)
+	SearchHandler(const std::string& searchString, bool exact,
+		const std::filesystem::path& filePath)
+		: m_SearchString(searchString), m_Exact(exact)
 	{
 		m_Current.filePath = filePath;
 	}
@@ -58,13 +59,16 @@ private:
 	void Increment() {
 		if (m_Current.path.empty())
 			return;
-		auto &indices = m_Current.path.back().indices;
+		auto& indices = m_Current.path.back().indices;
 		if (!indices.empty())
 			++indices.back();
 	}
 	bool CheckMatch(std::string_view fileStr, bool isValue)
 	{
-		if (fileStr.find(m_SearchString) == std::string_view::npos)
+		bool matches = m_Exact
+			? fileStr == m_SearchString
+			: fileStr.find(m_SearchString) != std::string_view::npos;
+		if (!matches)
 			return true;
 
 		if (isValue)
@@ -77,11 +81,12 @@ private:
 private:
 	SearchResult m_Current;
 	const std::string& m_SearchString;
+	bool m_Exact;
 };
 
-void Search(const std::string& searchString)
+void Search(const std::string& searchString, bool exact)
 {
-	const OpenJsonFile *activeFile = gOpenFileManager.m_ActiveFile;
+	const OpenJsonFile* activeFile = gOpenFileManager.m_ActiveFile;
 
 	if (!activeFile)
 	{
@@ -92,7 +97,7 @@ void Search(const std::string& searchString)
 
 	const RapidJsonDomFile& domFile = static_cast<decltype(domFile)>(*activeFile->file);
 
-	SearchHandler searchHandler(searchString, activeFile->path);
+	SearchHandler searchHandler(searchString, exact, activeFile->path);
 
 	SearchResults::SearchStarted(searchString.c_str());
 	domFile.m_Doc.Accept(searchHandler);

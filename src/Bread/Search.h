@@ -2,4 +2,4 @@
 
 #include <string>
 
-void Search(const std::string &searchString);
+void Search(const std::string &searchString, bool exact);

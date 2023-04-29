@@ -41,6 +41,7 @@ UX Enhancements:
  + also object field count?
 * installer
 * Find enhancements:
+ + separate key + value fields
  + ignore empty/null option
 
 Feature Wishlist:
