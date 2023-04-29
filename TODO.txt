@@ -23,6 +23,7 @@ Code Cleanup:
 
 UX Glitches:
 * context menus
+* special display / auto-expansion of empty arrays/objects
 
 UX Enhancements:
 * Enable copying values from tree views
@@ -30,12 +31,17 @@ UX Enhancements:
  + copy entire object/array to clipboard? (any limit?)
 * Reload from disk
  + auto-prompt
+* Tab tooltip shows full file path
 * colors + icons in tree view
 * support various ways of opening files:
  + drag and drop
  + context menu hook
  + file association
+* Show array sizes
+ + also object field count?
 * installer
+* Find enhancements:
+ + ignore empty/null option
 
 Feature Wishlist:
 * Show pretty printed content of selected json values in doc panel (with syntax highlighting)
