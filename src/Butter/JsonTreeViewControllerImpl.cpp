@@ -277,14 +277,13 @@ void JsonTreeViewControllerImpl::SelectSearchResult(const SearchResult& searchRe
 			// TRICKY: every iteration of this loop deals with either a leaf, an object member, or
 			//  an array element. But some frames can have both a key (object member) and an array
 			//  index. In this special case, we need to repeat the loop with the same frame.
-			if (!curVal->IsArray())
+			if (!curVal->IsArray() || frame.indices.empty())
 			{
 				++iFrame;
 			}
 			else
 			{
 				currentArrayIndexIndex = 0;
-				assert(frame.indices.size());
 			}
 			break;
 		case rapidjson::kArrayType:
